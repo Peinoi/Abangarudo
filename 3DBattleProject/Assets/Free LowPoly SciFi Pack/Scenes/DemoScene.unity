@@ -444,6 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1944950753}
   - component: {fileID: 1944950752}
+  - component: {fileID: 1944950754}
   - component: {fileID: 1944950750}
   - component: {fileID: 1944950749}
   m_Layer: 0
@@ -535,6 +536,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1944950754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944950748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a208492e9b4b9b4c822a75f9c61e265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 535290965}
+  offsetX: 0
+  offsetY: 2
+  offsetZ: -3
+  CameraSpeed: 10
+  rotationSpeed: 5
 --- !u!1 &2063871531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7072444061591711104, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
