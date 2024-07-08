@@ -10,6 +10,7 @@ public class PlayerUnit : MonoBehaviour
     public float moveSpeed = 5.0f; // 전체 스피드
     public float jumpForce = 5.0f; // 점프 힘
     private Rigidbody rb; // 리지드 컴포넌트
+    private Transform cameraTransform;
 
     private void Start()
     {
@@ -19,6 +20,8 @@ public class PlayerUnit : MonoBehaviour
         {
             Debug.LogError("Rigidbody component is missing from " + gameObject.name);
         }
+        cameraTransform = Camera.main.transform;
+
         AnimClear();
     }
 
@@ -43,7 +46,7 @@ public class PlayerUnit : MonoBehaviour
         animator.SetBool("WalkBack_Shoot_AR", false);
     }
 
-    void PlayerMove() // 플레이어 조작
+    void PlayerMove()
     {
         float hAxis = Input.GetAxisRaw("Horizontal");
         float vAxis = Input.GetAxisRaw("Vertical");
@@ -51,8 +54,15 @@ public class PlayerUnit : MonoBehaviour
 
         if (inputDir != Vector3.zero)
         {
-            rb.velocity = new Vector3(inputDir.x * moveSpeed, rb.velocity.y, inputDir.z * moveSpeed);
-            transform.rotation = Quaternion.LookRotation(inputDir);
+            // 카메라 방향을 기준으로 이동 방향 변환
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0;
+            Vector3 cameraRight = cameraTransform.right;
+            cameraRight.y = 0;
+            Vector3 moveDir = (cameraForward * inputDir.z + cameraRight * inputDir.x).normalized;
+
+            rb.velocity = new Vector3(moveDir.x * moveSpeed, rb.velocity.y, moveDir.z * moveSpeed);
+            transform.rotation = Quaternion.LookRotation(moveDir);
 
             animator.SetBool("IDLE", false);
             animator.SetBool("RUN", true);
@@ -62,9 +72,9 @@ public class PlayerUnit : MonoBehaviour
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
             animator.SetBool("RUN", false);
             animator.SetBool("IDLE", true);
-            //animator.SetBool("JUMP", false);
         }
     }
+
 
     void PlayerJump()
     {
