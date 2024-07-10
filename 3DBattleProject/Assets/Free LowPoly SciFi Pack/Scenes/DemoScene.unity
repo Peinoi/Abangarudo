@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &157188916 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6769474646652689705, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+  m_PrefabInstance: {fileID: 1105649442}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &363219738
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,11 +159,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 597671829}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &589627133 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6769474646652689705, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
-  m_PrefabInstance: {fileID: 1105649442}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &597671829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
@@ -307,6 +307,14 @@ PrefabInstance:
       propertyPath: bullet.Array.data[0]
       value: 
       objectReference: {fileID: 4430758350764400577, guid: 22ab2da466daa064eb9466454059c8b8, type: 3}
+    - target: {fileID: 1544831880087237318, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+      propertyPath: m_ImplicitCom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544831880087237318, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+      propertyPath: m_ImplicitTensor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4200287633665237462, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11934.5
@@ -319,13 +327,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5860.4
       objectReference: {fileID: 0}
+    - target: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.2780707
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.000001
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_LocalPosition.z
@@ -805,7 +817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1944950752}
   player: {fileID: 612623743}
-  playerHead: {fileID: 589627133}
+  playerHead: {fileID: 157188916}
   cameraSpeed: 10
   rotationSpeed: 5
   thirdPersonOffset: {x: 0, y: 2.5, z: -2.5}
