@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class PlayerUnit : MonoBehaviour
 {
@@ -65,9 +68,7 @@ public class PlayerUnit : MonoBehaviour
                 moveDirection.y = 0; // 수직 방향은 무시
 
                 // 플레이어 이동
-                Vector3 velocity = moveDirection * moveSpeed;
-                velocity.y = rb.velocity.y; // 기존 y 속도 유지 (점프 등)
-                rb.velocity = velocity;
+                rb.velocity = moveDirection * moveSpeed;
                 transform.rotation = Quaternion.LookRotation(moveDirection);
 
                 animator.SetBool("IDLE", false);
@@ -110,6 +111,7 @@ public class PlayerUnit : MonoBehaviour
             Invoke("JumpReset", 0.5f);
         }
     }
+
     void JumpReset()
     {
         //animator.SetBool("JUMP", false);
@@ -141,6 +143,7 @@ public class PlayerUnit : MonoBehaviour
             animator.SetBool("RUN", false);
         }
     }
+
 
     void MoveShot()
     {
