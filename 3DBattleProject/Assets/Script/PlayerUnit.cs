@@ -16,16 +16,6 @@ public class PlayerUnit : MonoBehaviour
     Vector3 movement;
     private int mode = 0;
 
-    [Header("총")]
-    public GameObject[] bullet;
-    public float maxBullet =100f; //최대 총탄
-    float currentBullet; //현재 총탄
-    public float fireDamp; // 연사 지연 시간
-    float currentDamp;
-    public float reloadTime; //재장전 시간
-    bool isReload = false; // 재장전 판단 변수
-    public Transform firePos; // 총구
-
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -35,11 +25,6 @@ public class PlayerUnit : MonoBehaviour
             Debug.LogError("Rigidbody component is missing from " + gameObject.name);
         }
         cameraTransform = Camera.main.transform;
-
-        //총
-        currentBullet = maxBullet;
-        currentDamp = 0;
-
 
         AnimClear();
     }
@@ -53,17 +38,6 @@ public class PlayerUnit : MonoBehaviour
         AutoShot();
         ChangeMode();
         PlayerMove();
-
-        currentDamp -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && mode == 1)
-        {
-            BulletShot();
-        }
-        if (Input.GetKeyDown(KeyCode.R)&&currentBullet<maxBullet &&!isReload)
-        {
-            isReload = true;
-            StartCoroutine(ReloadBullet());
-        }
     }
 
     void AnimClear()
@@ -242,34 +216,4 @@ public class PlayerUnit : MonoBehaviour
             Debug.Log(mode);
         }
     }
-
-
-
-
-    void BulletShot()
-    {
-        if (currentDamp <= 0 && currentBullet > 0 && !isReload)
-        {
-            currentDamp = fireDamp;
-            currentBullet--;
-
-            Instantiate(bullet[0], firePos.position, firePos.rotation);
-        } else if (currentBullet <= 0 && !isReload)
-        {
-            isReload = true;
-            StartCoroutine(ReloadBullet());
-        }
-    }
-
-
-    IEnumerator ReloadBullet()
-    {
-        for(float i = reloadTime; i>0; i -= 0.1f)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-        isReload = false;
-        currentBullet = maxBullet;
-    }
-
 }
