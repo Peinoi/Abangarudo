@@ -19,11 +19,12 @@ public class MainCamera : MonoBehaviour
 
     int mouse = 1;
     public GameObject playerunit;
+    public GameObject openTarget;
     void Start()
     {
         mainCamera.enabled = true;
         currentOffset = thirdPersonOffset;
-
+        openTarget.SetActive(false);
         // 초기 yaw와 pitch 설정
         yaw = transform.eulerAngles.y;
         pitch = transform.eulerAngles.x;
@@ -52,9 +53,11 @@ public class MainCamera : MonoBehaviour
             if (isFirstPerson)
             {
                 currentOffset = thirdPersonOffset;
+                openTarget.SetActive(false);
             }
             else
             {
+                openTarget.SetActive(true);
                 currentOffset = firstPersonOffset;
                 transform.position = playerHead.position; // 1인칭 모드로 전환 시 카메라 위치를 플레이어 머리 위치로 설정
             }
@@ -70,7 +73,7 @@ public class MainCamera : MonoBehaviour
             // 1인칭 모드일 때 카메라 위치를 플레이어 머리 위치로 설정
             transform.position = playerHead.position;
             transform.rotation = Quaternion.Euler(pitch, yaw, 0);
-            playerunit.transform.rotation = Quaternion.Euler(pitch, yaw, 0);
+            playerunit.transform.rotation = Quaternion.Euler(0, yaw, 0);
         }
         else
         {
