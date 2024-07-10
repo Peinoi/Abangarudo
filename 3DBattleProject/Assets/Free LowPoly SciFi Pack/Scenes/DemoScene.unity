@@ -560,6 +560,7 @@ MonoBehaviour:
   rotationSpeed: 5
   thirdPersonOffset: {x: 0, y: 2.5, z: -2.5}
   firstPersonOffset: {x: 0, y: 1.5, z: 0.5}
+  playerunit: {fileID: 612623743}
 --- !u!1 &2063871531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7072444061591711104, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
