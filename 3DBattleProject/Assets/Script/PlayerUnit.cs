@@ -94,8 +94,11 @@ public class PlayerUnit : MonoBehaviour
                 moveDirection.y = 0; // 수직 방향은 무시
 
                 // 플레이어 이동
-                rb.velocity = moveDirection * moveSpeed;
+                Vector3 velocity = moveDirection * moveSpeed;
+                velocity.y = rb.velocity.y; // 기존 y 속도 유지 (점프 등)
+                rb.velocity = velocity;
                 transform.rotation = Quaternion.LookRotation(moveDirection);
+
 
                 animator.SetBool("IDLE", false);
                 animator.SetBool("RUN", true);

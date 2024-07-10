@@ -154,7 +154,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 597671829}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &535290966 stripped
+--- !u!4 &589627133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6769474646652689705, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
   m_PrefabInstance: {fileID: 1105649442}
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1944950752}
   player: {fileID: 612623743}
-  playerHead: {fileID: 535290966}
+  playerHead: {fileID: 589627133}
   cameraSpeed: 10
   rotationSpeed: 5
   thirdPersonOffset: {x: 0, y: 2.5, z: -2.5}
