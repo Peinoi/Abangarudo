@@ -135,6 +135,7 @@ public class PlayerUnit : MonoBehaviour
         {
             animator.SetBool("SHOT", false);
             animator.SetBool("IDLE", true);
+            animator.SetBool("RUN", false);
         }
     }
 
