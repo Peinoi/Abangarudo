@@ -63,15 +63,13 @@ public class PlayerUnit : MonoBehaviour
 
             if (inputDir != Vector3.zero)
             {
-                // 카메라 방향을 기준으로 이동 방향 변환
-                Vector3 cameraForward = cameraTransform.forward;
-                cameraForward.y = 0;
-                Vector3 cameraRight = cameraTransform.right;
-                cameraRight.y = 0;
-                Vector3 moveDir = (cameraForward * inputDir.z + cameraRight * inputDir.x).normalized;
+                // 플레이어의 이동 방향을 카메라의 회전에 맞춤
+                Vector3 moveDirection = cameraTransform.TransformDirection(inputDir);
+                moveDirection.y = 0; // 수직 방향은 무시
 
-                rb.velocity = new Vector3(moveDir.x * moveSpeed, rb.velocity.y, moveDir.z * moveSpeed);
-                transform.rotation = Quaternion.LookRotation(moveDir);
+                // 플레이어 이동
+                rb.velocity = moveDirection * moveSpeed;
+                transform.rotation = Quaternion.LookRotation(moveDirection);
 
                 animator.SetBool("IDLE", false);
                 animator.SetBool("RUN", true);
@@ -92,11 +90,17 @@ public class PlayerUnit : MonoBehaviour
 
     void Zoom(float h, float v)
     {
-        movement.Set(h, 0, v);
-        movement = movement.normalized * moveSpeed * Time.deltaTime;
+        Vector3 inputDir = new Vector3(h, 0, v).normalized;
+
+        // 이동 방향을 카메라의 회전에 맞춤
+        Vector3 moveDirection = cameraTransform.TransformDirection(inputDir);
+        moveDirection.y = 0; // 수직 방향은 무시
+
+        movement = moveDirection * moveSpeed * Time.deltaTime;
 
         rb.MovePosition(transform.position + movement);
     }
+
     void PlayerJump()
     {
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -131,7 +135,8 @@ public class PlayerUnit : MonoBehaviour
             animator.SetBool("IDLE", false);
             animator.SetBool("RUN", false);
             // 여기서 추가적인 공격 로직을 추가할 수 있습니다.
-        }else if (Input.GetMouseButtonUp(0))
+        }
+        else if (Input.GetMouseButtonUp(0))
         {
             animator.SetBool("SHOT", false);
             animator.SetBool("IDLE", true);
@@ -189,7 +194,8 @@ public class PlayerUnit : MonoBehaviour
         }
     }
 
-    void ChangeMode() {
+    void ChangeMode()
+    {
         if (Input.GetMouseButtonDown(1) && mode == 0)
         {
             mode = 1;
@@ -198,7 +204,7 @@ public class PlayerUnit : MonoBehaviour
             animator.SetBool("RUN", false);
             Debug.Log(mode);
         }
-        else if(Input.GetMouseButtonDown(1) && mode == 1)
+        else if (Input.GetMouseButtonDown(1) && mode == 1)
         {
             mode = 0;
             animator.SetBool("IDLE2", false);
