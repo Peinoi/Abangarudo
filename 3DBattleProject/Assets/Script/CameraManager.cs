@@ -48,6 +48,17 @@ public class CameraManager : MonoBehaviour
         firstPersonCam.rect = new Rect(0, 0, 1, 1);
         overheadCam.depth = 1;
         firstPersonCam.depth = -1;
+
+        // 3인칭 카메라의 회전을 1인칭 카메라와 부모 오브젝트에 복사
+        Vector3 eulerAngles = overheadCam.transform.eulerAngles;
+        rotationX = eulerAngles.x;
+        rotationY = eulerAngles.y;
+        firstPersonCam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+
+        if (parentObject != null)
+        {
+            parentObject.localRotation = Quaternion.Euler(0f, rotationY, 0f);
+        }
     }
 
     void ShowoverheadCam()
@@ -67,6 +78,9 @@ public class CameraManager : MonoBehaviour
         firstPersonCam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
 
         // 부모 오브젝트의 로테이션을 업데이트
-        parentObject.localRotation = Quaternion.Euler(0f, rotationY, 0f);
+        if (parentObject != null)
+        {
+            parentObject.localRotation = Quaternion.Euler(0f, rotationY, 0f);
+        }
     }
 }
