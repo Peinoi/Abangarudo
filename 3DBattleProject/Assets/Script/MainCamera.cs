@@ -9,8 +9,8 @@ public class MainCamera : MonoBehaviour
     public float rotationSpeed = 5.0f;      // 마우스 회전 속도
 
     private float yaw = 0.0f;               // 마우스 yaw (좌우 회전)
-    private float pitch = 0.0f;             // 마우스 pitch (상하 회전)
-/*    private bool isFirstPerson = false;*/
+    private float pitch = 0.0f;            // 마우스 pitch (상하 회전)
+    private bool isFirstPerson = false;
 
     // 기본 오프셋 값
     public Vector3 thirdPersonOffset = new Vector3(0.0f, 1f, -2f);
@@ -63,15 +63,15 @@ public class MainCamera : MonoBehaviour
 
     void LateUpdate()
     {
-/*        if (isFirstPerson)
+        if (isFirstPerson)
         {
             // 1인칭 모드일 때 카메라 위치를 플레이어 머리 위치로 설정
-            transform.position = playerHead.position;
-            transform.rotation = Quaternion.Euler(pitch, yaw, 0);
-            playerunit.transform.rotation = Quaternion.Euler(0, yaw, 0);
+           // transform.position = playerHead.position;
+           // transform.rotation = Quaternion.Euler(pitch, yaw, 0);
+           // playerunit.transform.rotation = Quaternion.Euler(0, yaw, 0);
         }
         else
-        {*/
+        {
             // 3인칭 모드일 때 카메라 위치와 회전을 업데이트
             Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
             Vector3 targetPos = player.transform.position + rotation * currentOffset;
@@ -81,6 +81,6 @@ public class MainCamera : MonoBehaviour
 
             // 타겟을 바라보도록 카메라 회전
             transform.LookAt(player.transform.position + Vector3.up * 1.5f);
-/*        }*/
+        }
     }
 }

@@ -13,6 +13,7 @@ public class PlayerUnit : MonoBehaviour
     public float h; // Horizontal
     private Rigidbody rb; // 리지드 컴포넌트
     private Transform cameraTransform;
+    public Transform firstPersonCamera;
     Vector3 movement;
     private int mode = 0;
 
@@ -122,7 +123,7 @@ public class PlayerUnit : MonoBehaviour
         Vector3 inputDir = new Vector3(h, 0, v).normalized;
 
         // 이동 방향을 카메라의 회전에 맞춤
-        Vector3 moveDirection = cameraTransform.TransformDirection(inputDir);
+        Vector3 moveDirection = firstPersonCamera.TransformDirection(inputDir);
         moveDirection.y = 0; // 수직 방향은 무시
 
         movement = moveDirection * moveSpeed * Time.deltaTime;
