@@ -10,7 +10,7 @@ public class MainCamera : MonoBehaviour
 
     private float yaw = 0.0f;               // 마우스 yaw (좌우 회전)
     private float pitch = 0.0f;             // 마우스 pitch (상하 회전)
-    private bool isFirstPerson = false;
+/*    private bool isFirstPerson = false;*/
 
     // 기본 오프셋 값
     public Vector3 thirdPersonOffset = new Vector3(0.0f, 1f, -2f);
@@ -32,11 +32,6 @@ public class MainCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            mouse = mouse == 1 ? 0 : 1;
-        }
-
         if (mouse == 1)
         {
             // 마우스 입력을 감지하여 yaw와 pitch 업데이트
@@ -48,7 +43,7 @@ public class MainCamera : MonoBehaviour
         }
 
         // 마우스 오른쪽 버튼 클릭 시 1인칭/3인칭 모드 전환
-        if (Input.GetMouseButtonDown(1))
+/*        if (Input.GetMouseButtonDown(1))
         {
             if (isFirstPerson)
             {
@@ -63,12 +58,12 @@ public class MainCamera : MonoBehaviour
             }
 
             isFirstPerson = !isFirstPerson;
-        }
+        }*/
     }
 
     void LateUpdate()
     {
-        if (isFirstPerson)
+/*        if (isFirstPerson)
         {
             // 1인칭 모드일 때 카메라 위치를 플레이어 머리 위치로 설정
             transform.position = playerHead.position;
@@ -76,7 +71,7 @@ public class MainCamera : MonoBehaviour
             playerunit.transform.rotation = Quaternion.Euler(0, yaw, 0);
         }
         else
-        {
+        {*/
             // 3인칭 모드일 때 카메라 위치와 회전을 업데이트
             Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
             Vector3 targetPos = player.transform.position + rotation * currentOffset;
@@ -86,6 +81,6 @@ public class MainCamera : MonoBehaviour
 
             // 타겟을 바라보도록 카메라 회전
             transform.LookAt(player.transform.position + Vector3.up * 1.5f);
-        }
+/*        }*/
     }
 }
