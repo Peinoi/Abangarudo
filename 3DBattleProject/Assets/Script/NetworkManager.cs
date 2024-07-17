@@ -79,6 +79,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
         int idx = Random.Range(1, points.Length);
         // 캐릭터를 생성
-        PhotonNetwork.Instantiate("PolyartCharacter", points[idx].position, points[idx].rotation, 0);
+        PhotonNetwork.Instantiate("MyPlayer", points[idx].position, points[idx].rotation, 0);
     }
 }
