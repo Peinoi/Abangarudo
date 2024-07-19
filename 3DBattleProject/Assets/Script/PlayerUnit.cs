@@ -56,7 +56,7 @@ public class PlayerUnit : MonoBehaviour
         PlayerMove();
 
         currentDamp -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && mode == 1)
+        /*if (Input.GetMouseButton(0) && mode == 1)
         {
             BulletShot();
         }
@@ -64,7 +64,7 @@ public class PlayerUnit : MonoBehaviour
         {
             isReload = true;
             StartCoroutine(ReloadBullet());
-        }
+        }*/
     }
 
     void AnimClear()
@@ -250,7 +250,7 @@ public class PlayerUnit : MonoBehaviour
 
 
 
-    void BulletShot()
+   /* void BulletShot()
     {
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
         {
@@ -274,6 +274,6 @@ public class PlayerUnit : MonoBehaviour
         }
         isReload = false;
         currentBullet = maxBullet;
-    }
+    }*/
 
 }

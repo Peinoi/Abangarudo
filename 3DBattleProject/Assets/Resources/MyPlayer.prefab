@@ -364,6 +364,8 @@ GameObject:
   m_Component:
   - component: {fileID: 580289628295727240}
   - component: {fileID: 225740654174763255}
+  - component: {fileID: 4135256789419108907}
+  - component: {fileID: 2899837744054940102}
   m_Layer: 0
   m_Name: AssaultRifle
   m_TagString: Untagged
@@ -497,6 +499,44 @@ SkinnedMeshRenderer:
     m_Center: {x: -34.27955, y: -49.079704, z: 120.48372}
     m_Extent: {x: 95.48148, y: 94.6697, z: 10.629513}
   m_DirtyAABB: 0
+--- !u!114 &4135256789419108907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933602788955464693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37da69a4acdeab44288eaa47baf48f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGun: {fileID: 2899837744054940102}
+  theCam: {fileID: 9070979547279470203}
+  bulletPrefab: {fileID: 4173017364323049752, guid: 5aee77f5e9607354887952eeced3853a, type: 3}
+  bulletSpawnPoint: {fileID: 1383074156597179438}
+--- !u!114 &2899837744054940102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933602788955464693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6cac6e496444ef479fdb15b0f30cf0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunName: Rifle
+  range: 100
+  fireRate: 0.2
+  reloadTime: 0.1
+  damage: 100
+  reloadBulletCount: 100
+  currentBulletCount: 100
+  maxBulletCount: 100
+  carryBulletCount: 100
+  bulletSpeed: 0
 --- !u!1 &1142979141619761451
 GameObject:
   m_ObjectHideFlags: 0
