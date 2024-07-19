@@ -139,7 +139,6 @@ MonoBehaviour:
   thirdPersonOffset: {x: 0, y: 2.5, z: -2.5}
   firstPersonOffset: {x: 0, y: 1.5, z: 0.5}
   playerunit: {fileID: 6992607572415899915}
-  openTarget: {fileID: 0}
 --- !u!124 &3232025684727247111
 Behaviour:
   m_ObjectHideFlags: 0
