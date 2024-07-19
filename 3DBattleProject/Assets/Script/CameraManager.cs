@@ -28,11 +28,13 @@ public class CameraManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !FPS)
         {
             ShowfirstPersonCam();
+            overheadCam.gameObject.SetActive(false);
             FPS = true;
         }
         else if (Input.GetMouseButtonDown(1) && FPS)
         {
             ShowoverheadCam();
+            overheadCam.gameObject.SetActive(true);
             FPS = false;
         }
 

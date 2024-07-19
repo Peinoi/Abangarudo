@@ -14,6 +14,7 @@ public class PlayerUnit : MonoBehaviour
     private Rigidbody rb; // 리지드 컴포넌트
     private Transform cameraTransform;
     public Transform firstPersonCamera;
+
     Vector3 movement;
     private int mode = 0;
 
