@@ -13,13 +13,15 @@ public class CameraManager : MonoBehaviour
     public float lookSpeed = 2f;
     float rotationX = 0f;
     float rotationY = 0f;
-
+    public GameObject openTarget;
     // Start is called before the first frame update
     public void Awake()
     {
         firstPersonCam.enabled = true;
         overheadCam.enabled = true;
         ShowoverheadCam();
+        openTarget = GameObject.FindWithTag("Target");
+        openTarget.SetActive(false);
     }
 
     // Update is called once per frame
@@ -28,11 +30,15 @@ public class CameraManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !FPS)
         {
             ShowfirstPersonCam();
+            overheadCam.gameObject.SetActive(false);
+            openTarget.SetActive(true);
             FPS = true;
         }
         else if (Input.GetMouseButtonDown(1) && FPS)
         {
             ShowoverheadCam();
+            overheadCam.gameObject.SetActive(true);
+            openTarget.SetActive(false);
             FPS = false;
         }
 

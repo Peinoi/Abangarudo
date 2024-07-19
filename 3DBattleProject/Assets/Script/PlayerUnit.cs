@@ -27,6 +27,8 @@ public class PlayerUnit : MonoBehaviour
     bool isReload = false; // 재장전 판단 변수
     public Transform firePos; // 총구
 
+
+ 
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -155,8 +157,12 @@ public class PlayerUnit : MonoBehaviour
             isGrounded = true;
             animator.SetBool("IDLE", true);
         }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            this.gameObject.SetActive(false);
+        }
     }
-
+    
     void AutoShot()
     {
         if (isGrounded && Input.GetMouseButton(0)) // 마우스 좌클릭을 누르고 있을 때
