@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerUnit : MonoBehaviour
+public class PlayerUnit : MonoBehaviourPunCallbacks
 {
     private Animator animator; // 애니메이터
     private bool isGrounded = true; // 땅에 닿았는지 여부를 추적
@@ -20,7 +21,7 @@ public class PlayerUnit : MonoBehaviour
 
     [Header("총")]
     public GameObject[] bullet;
-    public float maxBullet =100f; //최대 총탄
+    public float maxBullet = 100f; //최대 총탄
     float currentBullet; //현재 총탄
     public float fireDamp; // 연사 지연 시간
     float currentDamp;
@@ -28,10 +29,14 @@ public class PlayerUnit : MonoBehaviour
     bool isReload = false; // 재장전 판단 변수
     public Transform firePos; // 총구
 
-
- 
     private void Start()
     {
+        if (!photonView.IsMine)
+        {
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(rb);
+        }
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         if (rb == null)
@@ -40,16 +45,17 @@ public class PlayerUnit : MonoBehaviour
         }
         cameraTransform = Camera.main.transform;
 
-        //총
+        // 총
         currentBullet = maxBullet;
         currentDamp = 0;
-
 
         AnimClear();
     }
 
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
         Cursor.lockState = CursorLockMode.Locked;
@@ -63,7 +69,7 @@ public class PlayerUnit : MonoBehaviour
         {
             BulletShot();
         }
-        if (Input.GetKeyDown(KeyCode.R)&&currentBullet<maxBullet &&!isReload)
+        if (Input.GetKeyDown(KeyCode.R) && currentBullet < maxBullet && !isReload)
         {
             isReload = true;
             StartCoroutine(ReloadBullet());
@@ -102,7 +108,6 @@ public class PlayerUnit : MonoBehaviour
                 velocity.y = rb.velocity.y; // 기존 y 속도 유지 (점프 등)
                 rb.velocity = velocity;
                 transform.rotation = Quaternion.LookRotation(moveDirection);
-
 
                 animator.SetBool("IDLE", false);
                 animator.SetBool("RUN", true);
@@ -147,7 +152,6 @@ public class PlayerUnit : MonoBehaviour
 
     void JumpReset()
     {
-        //animator.SetBool("JUMP", false);
         isGrounded = true;
     }
 
@@ -160,10 +164,10 @@ public class PlayerUnit : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
-    
+
     void AutoShot()
     {
         if (isGrounded && Input.GetMouseButton(0)) // 마우스 좌클릭을 누르고 있을 때
@@ -180,7 +184,6 @@ public class PlayerUnit : MonoBehaviour
             animator.SetBool("RUN", false);
         }
     }
-
 
     void MoveShot()
     {
@@ -254,9 +257,6 @@ public class PlayerUnit : MonoBehaviour
         }
     }
 
-
-
-
     void BulletShot()
     {
         if (currentDamp <= 0 && currentBullet > 0 && !isReload)
@@ -265,22 +265,21 @@ public class PlayerUnit : MonoBehaviour
             currentBullet--;
 
             Instantiate(bullet[0], firePos.position, firePos.rotation);
-        } else if (currentBullet <= 0 && !isReload)
+        }
+        else if (currentBullet <= 0 && !isReload)
         {
             isReload = true;
             StartCoroutine(ReloadBullet());
         }
     }
 
-
     IEnumerator ReloadBullet()
     {
-        for(float i = reloadTime; i>0; i -= 0.1f)
+        for (float i = reloadTime; i > 0; i -= 0.1f)
         {
             yield return new WaitForSeconds(0.1f);
         }
         isReload = false;
         currentBullet = maxBullet;
     }
-
 }

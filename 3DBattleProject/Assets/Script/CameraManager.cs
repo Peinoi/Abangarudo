@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviourPunCallbacks
 {
     public Camera firstPersonCam;
     public Camera overheadCam;
@@ -14,31 +15,48 @@ public class CameraManager : MonoBehaviour
     float rotationX = 0f;
     float rotationY = 0f;
     public GameObject openTarget;
-    // Start is called before the first frame update
+
     public void Awake()
     {
+        if (!photonView.IsMine)
+        {
+            Destroy(firstPersonCam.gameObject);
+            Destroy(overheadCam.gameObject);
+            return;
+        }
+
         firstPersonCam.enabled = true;
         overheadCam.enabled = true;
         ShowoverheadCam();
         openTarget = GameObject.FindWithTag("Target");
-        openTarget.SetActive(false);
+        if (openTarget != null)
+        {
+            openTarget.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         if (Input.GetMouseButtonDown(1) && !FPS)
         {
             ShowfirstPersonCam();
             overheadCam.gameObject.SetActive(false);
-            openTarget.SetActive(true);
+            if (openTarget != null)
+            {
+                openTarget.SetActive(true);
+            }
             FPS = true;
         }
         else if (Input.GetMouseButtonDown(1) && FPS)
         {
             ShowoverheadCam();
             overheadCam.gameObject.SetActive(true);
-            openTarget.SetActive(false);
+            if (openTarget != null)
+            {
+                openTarget.SetActive(false);
+            }
             FPS = false;
         }
 
@@ -80,7 +98,7 @@ public class CameraManager : MonoBehaviour
         // 마우스 이동으로 카메라 회전
         rotationX -= Input.GetAxis("Mouse Y") * lookSpeed;
         rotationY += Input.GetAxis("Mouse X") * lookSpeed;
-        rotationX = Mathf.Clamp(rotationX, 0f, 0f);
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
         firstPersonCam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
 
         // 부모 오브젝트의 로테이션을 업데이트
