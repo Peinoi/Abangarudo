@@ -29,8 +29,22 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
     bool isReload = false; // 재장전 판단 변수
     public Transform firePos; // 총구
 
+
+    //1인칭 사격 모드
+    public Camera personCam;
+    public float distance = 10f;
+    bool person = false;
+    //피격체 데이터
+    RaycastHit hitData;
+    // 목표 지점으로 총알을 발사
+    Vector3 targetPoint;
+
     private void Start()
     {
+        if (personCam == null)
+        {
+            Debug.LogError("카메라가 설정되지 않았습니다.");
+        }
         if (!photonView.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
@@ -50,6 +64,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         currentDamp = 0;
 
         AnimClear();
+        
     }
 
     void Update()
@@ -74,6 +89,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             isReload = true;
             StartCoroutine(ReloadBullet());
         }
+        BulletLine();
     }
 
     void AnimClear()
@@ -264,7 +280,21 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             currentDamp = fireDamp;
             currentBullet--;
 
-            Instantiate(bullet[0], firePos.position, firePos.rotation);
+            if (hitData.collider.tag == "Enmey")
+            {
+                targetPoint = hitData.point;
+            }
+                
+            
+            else
+            {
+                targetPoint = personCam.transform.position + personCam.transform.forward * distance; // 레이캐스트가 적중하지 않은 경우
+            }
+
+            Vector3 direction = (targetPoint - firePos.position).normalized;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+
+            Instantiate(bullet[0], firePos.position, rotation);
         }
         else if (currentBullet <= 0 && !isReload)
         {
@@ -281,5 +311,38 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         }
         isReload = false;
         currentBullet = maxBullet;
+    }
+
+
+
+    void BulletLine()
+    {
+        // 오른쪽 마우스 버튼이 눌렸을 때 토글
+        if (Input.GetMouseButtonDown(1))
+        {
+            person = !person;
+        }
+
+        // 사격 모드가 활성화되었을 때만 실행
+        if (person && personCam != null)
+        {
+            Vector3 rayOrigin = personCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            Vector3 rayDir = personCam.transform.forward;
+
+            // 레이캐스트
+            if (Physics.Raycast(rayOrigin, rayDir, out hitData, distance))
+            {
+
+                Debug.Log("레이 발사~~");
+                Debug.DrawRay(rayOrigin, rayDir * distance, Color.red);
+                targetPoint = hitData.point; // 레이캐스트가 적중한 지점
+                if (hitData.collider.tag == "Enemy")
+                {
+
+                    Debug.Log("적개체 발견");
+                }
+            }
+        }
+        else { Debug.Log("레이 작동 안함?"); }
     }
 }

@@ -98,7 +98,10 @@ public class CameraManager : MonoBehaviourPunCallbacks
         // 마우스 이동으로 카메라 회전
         rotationX -= Input.GetAxis("Mouse Y") * lookSpeed;
         rotationY += Input.GetAxis("Mouse X") * lookSpeed;
-        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+
+        // 회전 각도 제한
+        rotationX = Mathf.Clamp(rotationX, -10f, 10f);
+
         firstPersonCam.transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
 
         // 부모 오브젝트의 로테이션을 업데이트
