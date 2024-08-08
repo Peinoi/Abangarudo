@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerUnit : MonoBehaviourPunCallbacks
 {
@@ -27,9 +29,10 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
     float currentDamp;
     public float reloadTime; //재장전 시간
     bool isReload = false; // 재장전 판단 변수
+    public int reloadItem = 0;
     public Transform firePos; // 총구
-
-
+        
+    [Header("FPS")]
     //1인칭 사격 모드
     public Camera personCam;
     public float distance = 10f;
@@ -64,7 +67,10 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         currentDamp = 0;
 
         AnimClear();
-        
+
+
+        UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
+        UIManager.instance.reloadItem.text = reloadItem.ToString();
     }
 
     void Update()
@@ -89,6 +95,11 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             isReload = true;
             StartCoroutine(ReloadBullet());
         }
+
+       
+
+
+
         BulletLine();
     }
 
@@ -178,9 +189,26 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             isGrounded = true;
             animator.SetBool("IDLE", true);
         }
+        
+
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(this.gameObject);
+            if (UIManager.instance.hp.value > 0)
+            {
+                UIManager.instance.hp.value -= 10;
+                if(UIManager.instance.hp.value <= 0)
+                {
+                    this.gameObject.SetActive(false);
+                    Debug.Log("Fail");
+                }
+                Debug.Log("Damage");
+            }
+            else
+            {
+                this.gameObject.SetActive(false);
+                Debug.Log("Fail");
+            }
+            
         }
     }
 
@@ -279,7 +307,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         {
             currentDamp = fireDamp;
             currentBullet--;
-
+            UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
             if (hitData.collider.tag == "Enmey")
             {
                 targetPoint = hitData.point;
@@ -296,11 +324,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
             Instantiate(bullet[0], firePos.position, rotation);
         }
-        else if (currentBullet <= 0 && !isReload)
-        {
-            isReload = true;
-            StartCoroutine(ReloadBullet());
-        }
+        
     }
 
     IEnumerator ReloadBullet()
@@ -311,6 +335,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         }
         isReload = false;
         currentBullet = maxBullet;
+        UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
     }
 
 
