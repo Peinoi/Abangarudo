@@ -15,7 +15,7 @@ public class CameraManager : MonoBehaviourPunCallbacks
     float rotationX = 0f;
     float rotationY = 0f;
     public GameObject openTarget;
-
+    public GameObject gunInfo;
     public void Awake()
     {
         if (!photonView.IsMine)
@@ -29,9 +29,11 @@ public class CameraManager : MonoBehaviourPunCallbacks
         overheadCam.enabled = true;
         ShowoverheadCam();
         openTarget = GameObject.FindWithTag("Target");
+        gunInfo = GameObject.FindWithTag("GunInfo");
         if (openTarget != null)
         {
             openTarget.SetActive(false);
+            gunInfo.SetActive(false);
         }
     }
 
@@ -46,6 +48,7 @@ public class CameraManager : MonoBehaviourPunCallbacks
             if (openTarget != null)
             {
                 openTarget.SetActive(true);
+                gunInfo.SetActive(true);
             }
             FPS = true;
         }
@@ -56,6 +59,7 @@ public class CameraManager : MonoBehaviourPunCallbacks
             if (openTarget != null)
             {
                 openTarget.SetActive(false);
+                gunInfo.SetActive(false);
             }
             FPS = false;
         }

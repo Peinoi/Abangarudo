@@ -94,6 +94,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         {
             isReload = true;
             StartCoroutine(ReloadBullet());
+            animator.SetBool("Reload", true);
         }
 
        
@@ -195,8 +196,9 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         {
             if (UIManager.instance.hp.value > 0)
             {
-                UIManager.instance.hp.value -= 10;
-                if(UIManager.instance.hp.value <= 0)
+                UIManager.instance.hp.value -= 100;
+                UIManager.instance.hp_Txt.text = UIManager.instance.hp.value.ToString();
+                if (UIManager.instance.hp.value <= 0)
                 {
                     this.gameObject.SetActive(false);
                     Debug.Log("Fail");
@@ -336,6 +338,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         isReload = false;
         currentBullet = maxBullet;
         UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
+        animator.SetBool("Reload", false);
     }
 
 

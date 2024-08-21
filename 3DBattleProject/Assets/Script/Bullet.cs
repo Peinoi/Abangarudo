@@ -15,6 +15,12 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
+
+    private void OnEnable()
+    {
+        Invoke("Delete", 5f);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag.Equals("Ground") || collision.gameObject.tag.Equals("Enemy"))
@@ -22,5 +28,12 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("Bullet hit " + collision.gameObject.name);
         }
+    }
+
+
+
+    void Delete()
+    {
+        Destroy(gameObject);
     }
 }

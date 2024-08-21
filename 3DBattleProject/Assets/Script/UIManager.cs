@@ -12,12 +12,14 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI reloadItem;
     public int reloadValue = 0;
     public Slider hp;
+    public TextMeshProUGUI hp_Txt;
 
     private void Awake()
     {
         instance = this; 
         DontDestroyOnLoad(this.gameObject);
-        hp.value = 100;
+        hp.value = 1000;
+        hp_Txt.text = "1000";
     }
 
     private void Update()
