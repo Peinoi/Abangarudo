@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     public int reloadValue = 0;
     public Slider hp;
     public TextMeshProUGUI hp_Txt;
+    public TextMeshProUGUI hitPoint;
+
 
     private void Awake()
     {

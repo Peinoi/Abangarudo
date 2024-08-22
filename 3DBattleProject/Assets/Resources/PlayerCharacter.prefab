@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: firstPersonCamera
       value: 
       objectReference: {fileID: 1799920399313202872}
+    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
+      propertyPath: bullet.Array.data[0]
+      value: 
+      objectReference: {fileID: 2032082926946290891, guid: 34f293a32fea21c47b1325cd50511e41, type: 3}
     - target: {fileID: 1404694180162902623, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -234,6 +238,18 @@ PrefabInstance:
     - target: {fileID: 4555003401961883057, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
       propertyPath: m_Name
       value: PolyartCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827949110034403012, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827949110034403012, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[10].Name
+      value: Reload
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827949110034403012, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[10].Type
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7763243624149093651, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
       propertyPath: sceneViewId
