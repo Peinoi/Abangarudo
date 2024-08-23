@@ -10,16 +10,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 버전 입력
     private readonly string version = "1.0f";
     // 사용자 아이디 입력
-    private string userid = "Mary";
-
+    [SerializeField] private InputField userid;
+    [SerializeField] private GameObject Login_Pop;
+    [SerializeField] private GameObject Lobby_Pop;
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         // 같은 룸의 유저들에게 자동으로 씬을 로딩
         PhotonNetwork.AutomaticallySyncScene = true;
         // 같은 버전의 유저끼리 접속 허용
         PhotonNetwork.GameVersion = version;
-        // 유저 아이디 할당
-        PhotonNetwork.NickName = userid;
         // 포톤 서버와 통신 횟수 설정. 초당 30회
         Debug.Log(PhotonNetwork.SendRate);
         // 서버 접속
@@ -80,5 +80,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         int idx = Random.Range(1, points.Length);
         // 캐릭터를 생성
         PhotonNetwork.Instantiate("PlayerCharacter", points[idx].position, points[idx].rotation, 0);
+    }
+    public void Checkname()
+    {
+        // 유저 아이디 할당
+        PhotonNetwork.NickName = userid.text;
+
+        Debug.Log(userid.text);
+
+        if(userid != null)
+        {
+            Login_Pop.SetActive(false);
+            Lobby_Pop.SetActive(true);
+        }
+        
+        
     }
 }
