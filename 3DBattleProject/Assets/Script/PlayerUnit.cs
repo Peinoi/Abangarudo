@@ -297,10 +297,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             animator.SetBool("WalkBack_Shoot_AR", false);
             animator.SetBool("IDLE", true);
         }
-        if (!player_Audio.isPlaying)
-        {
-            player_Audio.Play();
-        }
+       
     }
 
     void ChangeMode()
@@ -333,12 +330,13 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             currentDamp = fireDamp;
             currentBullet--;
             UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
-            if (hitData.collider.tag == "Enmey")
+            if(hitData.collider != null)
             {
-                targetPoint = hitData.point;
-            }
-                
-            
+                if (hitData.collider.tag == "Enmey")
+                {
+                    targetPoint = hitData.point;
+                }
+            }      
             else
             {
                 targetPoint = personCam.transform.position + personCam.transform.forward * distance; // 레이캐스트가 적중하지 않은 경우
@@ -346,12 +344,11 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
             Vector3 direction = (targetPoint - firePos.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(direction);
-            if (!gun_Audio.isPlaying)
-            {
+            
                 gun_Audio.clip = audioAttack[0];
                 gun_Audio.Play();
                 Debug.Log(gun_Audio.isPlaying + "쀼슝빠슝");
-            }
+            
             
             Instantiate(bullet[0], firePos.position, rotation);
             
