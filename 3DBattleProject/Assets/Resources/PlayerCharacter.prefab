@@ -163,26 +163,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1980318657582305214}
     m_Modifications:
-    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: CamMgr
-      value: 
-      objectReference: {fileID: 5285771889858230941}
-    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: distance
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: personCam
-      value: 
-      objectReference: {fileID: 2584700231731970753}
-    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: firstPersonCamera
-      value: 
-      objectReference: {fileID: 1799920399313202872}
-    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: bullet.Array.data[0]
-      value: 
-      objectReference: {fileID: 2032082926946290891, guid: 34f293a32fea21c47b1325cd50511e41, type: 3}
     - target: {fileID: 1404694180162902623, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -227,37 +207,11 @@ PrefabInstance:
       propertyPath: overheadCam
       value: 
       objectReference: {fileID: 2495412658068612324}
-    - target: {fileID: 3118914733022182597, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3118914733022182597, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: m_TagString
-      value: MainCamera
-      objectReference: {fileID: 0}
     - target: {fileID: 4555003401961883057, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
       propertyPath: m_Name
       value: PolyartCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 4827949110034403012, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4827949110034403012, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[10].Name
-      value: Reload
-      objectReference: {fileID: 0}
-    - target: {fileID: 4827949110034403012, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[10].Type
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7763243624149093651, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-      propertyPath: sceneViewId
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7962050116460506140, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-    - {fileID: 8400508133551585488, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -267,27 +221,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6396573896849334883, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
   m_PrefabInstance: {fileID: 6790343003105668282}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1799920399313202872 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5099973553464721922, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-  m_PrefabInstance: {fileID: 6790343003105668282}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &2584700231731970753 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 9070979547279470203, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-  m_PrefabInstance: {fileID: 6790343003105668282}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5285771889858230941 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1686300622582879783, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
-  m_PrefabInstance: {fileID: 6790343003105668282}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7da67d635606dd1458488ddc3ddb057b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &5567114438748092133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1404694180162902623, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}

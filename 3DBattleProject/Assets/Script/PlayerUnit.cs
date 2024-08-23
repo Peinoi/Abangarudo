@@ -42,6 +42,11 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
     // 목표 지점으로 총알을 발사
     Vector3 targetPoint;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource player_Audio;
+    [SerializeField] AudioSource gun_Audio;
+    [SerializeField] private AudioClip[] audioAttack;
+
     private void Start()
     {
         if (personCam == null)
@@ -94,6 +99,9 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         {
             isReload = true;
             StartCoroutine(ReloadBullet());
+            gun_Audio.clip = audioAttack[1];
+            gun_Audio.Play();
+            Debug.Log(gun_Audio.clip.name);
             animator.SetBool("Reload", true);
         }
 
@@ -124,8 +132,8 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             float hAxis = Input.GetAxisRaw("Horizontal");
             float vAxis = Input.GetAxisRaw("Vertical");
             Vector3 inputDir = new Vector3(hAxis, 0, vAxis).normalized;
-
-            if (inputDir != Vector3.zero)
+            bool isMoving = inputDir != Vector3.zero;
+            if (isMoving)
             {
                 // 플레이어의 이동 방향을 카메라의 회전에 맞춤
                 Vector3 moveDirection = cameraTransform.TransformDirection(inputDir);
@@ -139,16 +147,25 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
                 animator.SetBool("IDLE", false);
                 animator.SetBool("RUN", true);
+
+                if (!player_Audio.isPlaying)
+                {
+                    player_Audio.Play(); // 이동이 시작될 때만 재생
+                }
             }
             else
             {
                 rb.velocity = new Vector3(0, rb.velocity.y, 0);
                 animator.SetBool("RUN", false);
                 animator.SetBool("IDLE", true);
+
+                if (player_Audio.isPlaying)
+                {
+                    player_Audio.Stop(); // 이동이 멈추면 재생 중지
+                }
             }
         }
-
-        if (mode == 1)
+            if (mode == 1)
         {
             MoveShot();
         }
@@ -194,6 +211,8 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            gun_Audio.clip = audioAttack[2];
+            gun_Audio.Play();
             if (UIManager.instance.hp.value > 0)
             {
                 UIManager.instance.hp.value -= 100;
@@ -278,6 +297,10 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             animator.SetBool("WalkBack_Shoot_AR", false);
             animator.SetBool("IDLE", true);
         }
+        if (!player_Audio.isPlaying)
+        {
+            player_Audio.Play();
+        }
     }
 
     void ChangeMode()
@@ -323,14 +346,22 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
             Vector3 direction = (targetPoint - firePos.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(direction);
-
+            if (!gun_Audio.isPlaying)
+            {
+                gun_Audio.clip = audioAttack[0];
+                gun_Audio.Play();
+                Debug.Log(gun_Audio.isPlaying + "쀼슝빠슝");
+            }
+            
             Instantiate(bullet[0], firePos.position, rotation);
+            
         }
         
     }
 
     IEnumerator ReloadBullet()
     {
+        
         for (float i = reloadTime; i > 0; i -= 0.1f)
         {
             yield return new WaitForSeconds(0.1f);
