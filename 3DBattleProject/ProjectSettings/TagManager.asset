@@ -11,6 +11,7 @@ TagManager:
   - GunInfo
   - Dead
   - BulletB
+  - LobbyCamera
   layers:
   - Default
   - TransparentFX

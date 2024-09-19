@@ -1,6 +1,8 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviourPunCallbacks
 {
@@ -21,6 +23,15 @@ public class UIManager : MonoBehaviourPunCallbacks
     public int teamA_Point = 0;
     public TextMeshProUGUI team_B;
     public int teamB_Point = 0;
+    [Header("결과창")]
+    public GameObject result_Box;
+    public Text result_Txt;
+    public Button end;
+    public Button restart;
+    [Header("도움말")]
+    public GameObject open_Help;
+
+    public GameObject uiBox;
 
     private void Awake()
     {
@@ -34,8 +45,20 @@ public class UIManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+           Application.Quit();
         }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            end.onClick.Invoke();
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            restart.onClick.Invoke();
+        }
+    }
+    public void StartGame()
+    {
+        uiBox.SetActive(true);
     }
 
     [PunRPC]
@@ -63,20 +86,54 @@ public class UIManager : MonoBehaviourPunCallbacks
         if (teamA_Point >= 15)
         {
             Debug.Log("TeamA Win");
+            pv.RPC("Result", RpcTarget.All, 0);
         }
         else if (teamB_Point >= 15)
         {
             Debug.Log("TeamB Win");
+            pv.RPC("Result", RpcTarget.All, 1);
         }
     }
+    [PunRPC]
+    public void Result(int team)
+    {
+        result_Box.SetActive(true);
+        if (pv.IsMine&&team==0)
+        {
+            result_Txt.text = "Win";
+        }
+        else if( team == 1)
+        {
+            result_Txt.text = "Fail";
+        }
 
+
+    }
     [PunRPC]
     public void UpdateScore(int teamAPoints, int teamBPoints)
     {
         teamA_Point = teamAPoints;
         teamB_Point = teamBPoints;
 
-        team_A.text = "Team Red = " + teamA_Point.ToString();
-        team_B.text = "Team Blue = " + teamB_Point.ToString();
+        team_A.text = "Red = " + teamA_Point.ToString();
+        team_B.text = "Blue = " + teamB_Point.ToString();
+    }
+
+   
+    public void ReGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void GameEnd()
+    {
+        Application.Quit();
+    }
+    public void OpenHelp()
+    {
+        open_Help.SetActive(true);
+    }
+    public void CloseHelp()
+    {
+        open_Help.SetActive(false);
     }
 }

@@ -108,12 +108,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if(userid != null)
         {
             Login_Pop.SetActive(false);
-           
-            Lobby_Camer.SetActive(false);
-            Game_UI.SetActive(true);
+
+
+            //Game_UI.SetActive(true);
+            Invoke("CloseCamera", 2f);
             StartGame();
         }
         
         
+    }
+
+    public void CloseCamera()
+    {
+        Lobby_Camer.SetActive(false);
     }
 }

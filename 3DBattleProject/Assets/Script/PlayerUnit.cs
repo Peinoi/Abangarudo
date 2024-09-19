@@ -48,6 +48,8 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
     [SerializeField] AudioSource gun_Audio;
     [SerializeField] private AudioClip[] audioAttack;
 
+    public GameObject lobbyCamer;
+
     private void Start()
     {
         if (personCam == null)
@@ -73,14 +75,26 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         currentDamp = 0;
 
         AnimClear();
-
+        UIManager.instance.StartGame();
 
         UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
         UIManager.instance.reloadItem.text = reloadItem.ToString();
+
+        
     }
 
     void Update()
     {
+        /*if (lobbyCamer != null)
+        {
+            lobbyCamer = GameObject.FindGameObjectWithTag("LobbyCamera");
+            lobbyCamer.SetActive(false);
+            Debug.Log("카메라 찾음");
+        }
+        else
+        {
+            Debug.Log("카메라 수색중");
+        }*/
         if (!photonView.IsMine) return;
 
         v = Input.GetAxis("Vertical");
@@ -211,6 +225,9 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
         if (collision.gameObject.CompareTag("Dead"))
         {
             this.gameObject.SetActive(false);
+            Debug.Log("Fail");
+            UIManager.instance.pv.RPC("Result", RpcTarget.All, 1);
+         
         }
 
         if (collision.gameObject.CompareTag("Bullet")|| collision.gameObject.CompareTag("BulletB"))

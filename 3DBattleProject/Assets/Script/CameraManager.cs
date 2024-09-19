@@ -32,6 +32,8 @@ public class CameraManager : MonoBehaviourPunCallbacks
         gunInfo = GameObject.FindWithTag("GunInfo");
         if (openTarget != null)
         {
+            openTarget.transform.localScale = Vector3.one;
+            gunInfo.transform.localScale = Vector3.one;
             openTarget.SetActive(false);
             gunInfo.SetActive(false);
         }
