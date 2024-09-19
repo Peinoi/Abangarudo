@@ -33,6 +33,12 @@ public class Bullet : MonoBehaviour
 
             Debug.Log("Bullet hit " + collision.gameObject.name);
         }
+        else if (collision.gameObject.tag.Equals("Player"))
+        {
+            Destroy(gameObject);
+
+            Debug.Log("Bullet hit " + collision.gameObject.name);
+        }
     }
 
 

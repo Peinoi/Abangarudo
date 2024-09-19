@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1980318657582305214}
   m_Layer: 0
-  m_Name: PlayerCharacter
+  m_Name: PlayerCharacter 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,6 +163,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1980318657582305214}
     m_Modifications:
+    - target: {fileID: 1138608310505090173, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
+      propertyPath: bullet.Array.data[0]
+      value: 
+      objectReference: {fileID: 2032082926946290891, guid: bfcb567db43119d4ba0e02f89ed6fd3c, type: 3}
     - target: {fileID: 1404694180162902623, guid: a519cc5ecd8a6424d8261c66d533a2fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

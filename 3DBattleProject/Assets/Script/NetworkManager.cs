@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using TMPro;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -12,8 +13,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 사용자 아이디 입력
     [SerializeField] private InputField userid;
     [SerializeField] private GameObject Login_Pop;
-    [SerializeField] private GameObject Lobby_Pop;
-    private void Awake()
+    [SerializeField] private GameObject Game_UI;
+    [SerializeField] private GameObject Lobby_Camer;
+    [SerializeField] private TextMeshProUGUI userName;
+    private void StartGame()
     {
         DontDestroyOnLoad(this);
         // 같은 룸의 유저들에게 자동으로 씬을 로딩
@@ -47,7 +50,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 룸의 속성 정의
         RoomOptions ro = new RoomOptions();
-        ro.MaxPlayers = 20; // 최대 접속자 수 : 20명
+        ro.MaxPlayers = 4; // 최대 접속자 수 : 4명
         ro.IsOpen = true; // 룸의 오픈 여부
         ro.IsVisible = true;  // 로비에서 룸 목록에 노출 시킬지 여부 (공개,비공개)
 
@@ -74,24 +77,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Debug.Log($"{player.Value.NickName}.{player.Value.ActorNumber}");
             // $ => String.Format()
         }
-
+        int idx_Num = PhotonNetwork.LocalPlayer.ActorNumber;
         // 캐릭터 툴현 정보를 배열에 저장
-        Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-        int idx = Random.Range(1, points.Length);
-        // 캐릭터를 생성
-        PhotonNetwork.Instantiate("PlayerCharacter", points[idx].position, points[idx].rotation, 0);
+        Transform[] points = GameObject.Find("Map").GetComponentsInChildren<Transform>();
+
+        if (idx_Num == 1)
+        {
+           
+            int idx = Random.Range(1, 2);
+            // 캐릭터를 생성
+
+            PhotonNetwork.Instantiate("PlayerCharacter", points[idx].position, points[idx].rotation, 0);
+        }
+        else if (idx_Num <= 2)
+        {
+           
+            int idx = Random.Range(3, points.Length);
+            // 캐릭터를 생성
+
+            PhotonNetwork.Instantiate("PlayerCharacter 1", points[idx].position, points[idx].rotation, 0);
+        }
     }
     public void Checkname()
     {
         // 유저 아이디 할당
         PhotonNetwork.NickName = userid.text;
-
+        userName.text = PhotonNetwork.NickName;
         Debug.Log(userid.text);
 
         if(userid != null)
         {
             Login_Pop.SetActive(false);
-            Lobby_Pop.SetActive(true);
+           
+            Lobby_Camer.SetActive(false);
+            Game_UI.SetActive(true);
+            StartGame();
         }
         
         

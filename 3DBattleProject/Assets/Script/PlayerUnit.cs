@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class PlayerUnit : MonoBehaviourPunCallbacks
 {
@@ -207,14 +208,19 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             isGrounded = true;
             animator.SetBool("IDLE", true);
         }
-        
+        if (collision.gameObject.CompareTag("Dead"))
+        {
+            this.gameObject.SetActive(false);
+        }
 
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet")|| collision.gameObject.CompareTag("BulletB"))
         {
             gun_Audio.clip = audioAttack[2];
             gun_Audio.Play();
-            if (UIManager.instance.hp.value > 0)
+            /*if (UIManager.instance.hp.value > 0)
             {
+              
+
                 UIManager.instance.hp.value -= 100;
                 UIManager.instance.hp_Txt.text = UIManager.instance.hp.value.ToString();
                 if (UIManager.instance.hp.value <= 0)
@@ -228,11 +234,13 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             {
                 this.gameObject.SetActive(false);
                 Debug.Log("Fail");
-            }
-            
+            }*/
+            this.gameObject.SetActive(false);
+            Debug.Log("Fail");
         }
     }
 
+ 
     void AutoShot()
     {
         if (isGrounded && Input.GetMouseButton(0)) // 마우스 좌클릭을 누르고 있을 때

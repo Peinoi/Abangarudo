@@ -9,6 +9,8 @@ TagManager:
   - Bullet
   - Enemy
   - GunInfo
+  - Dead
+  - BulletB
   layers:
   - Default
   - TransparentFX
