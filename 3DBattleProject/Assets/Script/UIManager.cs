@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviourPunCallbacks
     [Header("결과창")]
     public GameObject result_Box;
     public Text result_Txt;
+    public Text result_Txt2;
     public Button end;
     public Button restart;
     [Header("도움말")]
@@ -46,6 +47,14 @@ public class UIManager : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Escape))
         {
            Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
         
     }
@@ -79,30 +88,59 @@ public class UIManager : MonoBehaviourPunCallbacks
         if (teamA_Point >= 13)
         {
             Debug.Log("TeamA Win");
-            pv.RPC("Result", RpcTarget.All, 0);
+
+            // 모든 플레이어를 순회하며 상태 업데이트
+            foreach (var player in PhotonNetwork.CurrentRoom.Players)
+            {
+                if (player.Key == photonView.OwnerActorNr) // 현재 플레이어가 A팀이라면
+                {
+                    UIManager.instance.pv.RPC("Result", player.Value, 0); // WIN
+                }
+                else // B팀 플레이어
+                {
+                    UIManager.instance.pv.RPC("Result", player.Value, 3); // FAIL
+                }
+            }
         }
         else if (teamB_Point >= 13)
         {
             Debug.Log("TeamB Win");
-            pv.RPC("Result", RpcTarget.All, 1);
+
+            // 모든 플레이어를 순회하며 상태 업데이트
+            foreach (var player in PhotonNetwork.CurrentRoom.Players)
+            {
+                if (player.Key == photonView.OwnerActorNr) // 현재 플레이어가 B팀이라면
+                {
+                    UIManager.instance.pv.RPC("Result", player.Value, 0); // WIN
+                }
+                else // A팀 플레이어
+                {
+                    UIManager.instance.pv.RPC("Result", player.Value, 3); // FAIL
+                }
+            }
         }
+
     }
     [PunRPC]
-    public void Result(int team)
+    public void Result(int status)
     {
         result_Box.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        if (pv.IsMine&&team==0)
-        {
-            result_Txt.text = "Win";
-        }
-        else if( team == 1)
-        {
-            result_Txt.text = "Fail";
-        }
 
-
+        if (status == 0) // WIN
+        {
+            result_Txt.text = "You Win!";
+        }
+        else if (status == 3) // FAIL
+        {
+            result_Txt.text = "You Lose!";
+        }
     }
+
+
+
+
+
     [PunRPC]
     public void UpdateScore(int teamAPoints, int teamBPoints)
     {

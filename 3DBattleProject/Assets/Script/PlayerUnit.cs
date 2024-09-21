@@ -9,6 +9,7 @@ using System;
 
 public class PlayerUnit : MonoBehaviourPunCallbacks
 {
+    public PhotonView pv;
     private Animator animator; // 애니메이터
     private bool isGrounded = true; // 땅에 닿았는지 여부를 추적
     public float moveSpeed = 5.0f; // 전체 스피드
@@ -222,15 +223,9 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             isGrounded = true;
             animator.SetBool("IDLE", true);
         }
-        if (collision.gameObject.CompareTag("Dead"))
-        {
-            this.gameObject.SetActive(false);
-            Debug.Log("Fail");
-            UIManager.instance.pv.RPC("Result", RpcTarget.All, 1);
-         
-        }
+        
 
-        if (collision.gameObject.CompareTag("Bullet")|| collision.gameObject.CompareTag("BulletB"))
+        if (collision.gameObject.CompareTag("Bullet")|| collision.gameObject.CompareTag("BulletB")|| collision.gameObject.CompareTag("Dead"))
         {
             gun_Audio.clip = audioAttack[2];
             gun_Audio.Play();
@@ -252,12 +247,41 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
                 this.gameObject.SetActive(false);
                 Debug.Log("Fail");
             }*/
-            this.gameObject.SetActive(false);
-            Debug.Log("Fail");
+
+            
+                photonView.RPC("Die", RpcTarget.All);
+            
+        
+
+        }
+    }
+    [PunRPC]
+    public void Die()
+    {
+        this.gameObject.SetActive(false);
+
+        // 죽은 플레이어의 ID를 가져옴
+        int playerId = photonView.OwnerActorNr;
+
+        // 모든 플레이어를 순회하며 상태 업데이트
+        foreach (var player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (player.Key == playerId)
+            {
+                // 죽은 플레이어에게 FAIL 표시
+                UIManager.instance.pv.RPC("Result", player.Value, 3); // FAIL
+            }
+            else
+            {
+                // 살아남은 플레이어에게 WIN 표시
+                UIManager.instance.pv.RPC("Result", player.Value, 0); // WIN
+            }
         }
     }
 
- 
+
+
+
     void AutoShot()
     {
         if (isGrounded && Input.GetMouseButton(0)) // 마우스 좌클릭을 누르고 있을 때
