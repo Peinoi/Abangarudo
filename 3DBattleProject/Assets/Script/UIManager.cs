@@ -89,10 +89,9 @@ public class UIManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("TeamA Win");
 
-            // 모든 플레이어를 순회하며 상태 업데이트
             foreach (var player in PhotonNetwork.CurrentRoom.Players)
             {
-                if (player.Key == photonView.OwnerActorNr) // 현재 플레이어가 A팀이라면
+                if (player.Value.IsMasterClient) // 마스터 클라이언트가 A팀이라면
                 {
                     UIManager.instance.pv.RPC("Result", player.Value, 0); // WIN
                 }
@@ -106,10 +105,9 @@ public class UIManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("TeamB Win");
 
-            // 모든 플레이어를 순회하며 상태 업데이트
             foreach (var player in PhotonNetwork.CurrentRoom.Players)
             {
-                if (player.Key == photonView.OwnerActorNr) // 현재 플레이어가 B팀이라면
+                if (!player.Value.IsMasterClient) // 마스터 클라이언트가 B팀이라면
                 {
                     UIManager.instance.pv.RPC("Result", player.Value, 0); // WIN
                 }
@@ -119,6 +117,8 @@ public class UIManager : MonoBehaviourPunCallbacks
                 }
             }
         }
+
+
 
     }
     [PunRPC]

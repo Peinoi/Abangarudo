@@ -50,7 +50,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
     [SerializeField] private AudioClip[] audioAttack;
 
     public GameObject lobbyCamer;
-
+    public int point;
     private void Start()
     {
         if (personCam == null)
@@ -121,13 +121,14 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
             animator.SetBool("Reload", true);
         }
 
-       
 
+       
 
 
         BulletLine();
     }
 
+ 
     void AnimClear()
     {
         animator.SetBool("IDLE", true);
