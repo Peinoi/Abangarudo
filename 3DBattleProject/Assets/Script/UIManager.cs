@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+  
        // hp.value = 1000;
         hp_Txt.text = "1000";
     }
@@ -47,14 +47,7 @@ public class UIManager : MonoBehaviourPunCallbacks
         {
            Application.Quit();
         }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            end.onClick.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            restart.onClick.Invoke();
-        }
+        
     }
     public void StartGame()
     {
@@ -83,12 +76,12 @@ public class UIManager : MonoBehaviourPunCallbacks
         // 모든 클라이언트에서 점수 업데이트
         pv.RPC("UpdateScore", RpcTarget.All, teamA_Point, teamB_Point);
 
-        if (teamA_Point >= 15)
+        if (teamA_Point >= 13)
         {
             Debug.Log("TeamA Win");
             pv.RPC("Result", RpcTarget.All, 0);
         }
-        else if (teamB_Point >= 15)
+        else if (teamB_Point >= 13)
         {
             Debug.Log("TeamB Win");
             pv.RPC("Result", RpcTarget.All, 1);
@@ -98,6 +91,7 @@ public class UIManager : MonoBehaviourPunCallbacks
     public void Result(int team)
     {
         result_Box.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
         if (pv.IsMine&&team==0)
         {
             result_Txt.text = "Win";

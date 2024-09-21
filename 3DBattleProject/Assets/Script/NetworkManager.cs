@@ -18,15 +18,33 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI userName;
     private void StartGame()
     {
-        DontDestroyOnLoad(this);
-        // 같은 룸의 유저들에게 자동으로 씬을 로딩
-        PhotonNetwork.AutomaticallySyncScene = true;
-        // 같은 버전의 유저끼리 접속 허용
-        PhotonNetwork.GameVersion = version;
-        // 포톤 서버와 통신 횟수 설정. 초당 30회
-        Debug.Log(PhotonNetwork.SendRate);
-        // 서버 접속
-        PhotonNetwork.ConnectUsingSettings();
+        //DontDestroyOnLoad(this);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        {
+            // 포톤 서버에 연결되어 있고, 방에 있음
+            Debug.Log("Connected to Photon and in a room.");
+            if (PhotonNetwork.IsConnected)
+            {
+                // 포톤 서버에 연결되어 있지만 방에 없음
+                Debug.Log("Connected to Photon but not in a room.");
+                OnJoinedRoom();
+
+            }
+        }
+        else
+        {
+            // 같은 룸의 유저들에게 자동으로 씬을 로딩
+            PhotonNetwork.AutomaticallySyncScene = true;
+            // 같은 버전의 유저끼리 접속 허용
+            PhotonNetwork.GameVersion = version;
+            // 포톤 서버와 통신 횟수 설정. 초당 30회
+            Debug.Log(PhotonNetwork.SendRate);
+            // 서버 접속
+            PhotonNetwork.ConnectUsingSettings();
+        }
+
+
+
     }
     // 포톤 서버에 접속 후 호출되는 롤백 함수
     public override void OnConnectedToMaster()

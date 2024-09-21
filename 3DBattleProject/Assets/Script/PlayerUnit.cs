@@ -79,7 +79,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
         UIManager.instance.bulletText.text = currentBullet + " / " + maxBullet;
         UIManager.instance.reloadItem.text = reloadItem.ToString();
-
+        Cursor.lockState = CursorLockMode.Locked;
         
     }
 
@@ -99,7 +99,7 @@ public class PlayerUnit : MonoBehaviourPunCallbacks
 
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
-        Cursor.lockState = CursorLockMode.Locked;
+        
         PlayerJump();
         AutoShot();
         ChangeMode();
